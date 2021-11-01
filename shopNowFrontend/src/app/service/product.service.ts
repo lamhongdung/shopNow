@@ -16,18 +16,6 @@ export class ProductService {
   // inject httpClient
   constructor(private httpClient: HttpClient) { }
 
-  searchProducts(theKeyword: string): Observable<Product[]> {
-
-    // need to build URL based on the keyword 
-    const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${theKeyword}`;
-
-    return this.httpClient.get<GetResponseProducts>(searchUrl).
-      pipe(
-        map(response => response._embedded.product)
-      );
-  }
-
-  // private getProducts(searchUrl: string): Observable<Product[]> {
   public getProducts(): Observable<Product[]> {
     return this.httpClient.get<GetResponseProducts>(this.baseUrl).
       pipe(
@@ -35,18 +23,32 @@ export class ProductService {
       );
   }
 
-  // getProductListPaginate(thePage: number,
-  //   thePageSize: number,
-  //   theCategoryId: number): Observable<GetResponseProducts> {
+  // getProductById()
+  getProduct(theProductId: number): Observable<Product> {
 
-  //   // need to build URL based on category id, page and size
-  //   const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${theCategoryId}`
-  //     + `&page=${thePage}&size=${thePageSize}`;
+    // need to build URL based on product id
+    const productUrl = `${this.baseUrl}/${theProductId}`;
 
-  //   console.log(`Getting products from - ${searchUrl}`);
+    return this.httpClient.get<Product>(productUrl);
+  }
 
-  //   return this.httpClient.get<GetResponseProducts>(searchUrl);
-  // }
+  searchProducts(searchTerm: string,thePage: number, thePageSize: number): Observable<GetResponseProducts> {
+
+    // need to build URL based on the keyword 
+    const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${searchTerm}&page=${thePage}&size=${thePageSize}`;
+
+    return this.httpClient.get<GetResponseProducts>(searchUrl);
+  }
+  
+  getProductListPaginate(thePage: number, thePageSize: number): Observable<GetResponseProducts> {
+
+    // need to build URL based on category id, page and size
+    const searchUrl = `${this.baseUrl}?page=${thePage}&size=${thePageSize}`;
+
+    console.log(`Getting products from - ${searchUrl}`);
+
+    return this.httpClient.get<GetResponseProducts>(searchUrl);
+  }
 }
 
 interface GetResponseProducts {

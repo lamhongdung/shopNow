@@ -15,11 +15,11 @@ export class SearchComponent implements OnInit {
   }
 
   // search products based on its name
-  searchProduct(searchValue: string) {
+  searchProduct(searchTerm: string) {
     
-    console.log(`search value = ${searchValue}`);
+    console.log(`search term = ${searchTerm}`);
 
-    // navigate to `/search/${searchValue}`
-    this.router.navigateByUrl(`/search/${searchValue}`);
+    // navigate to `/search/${searchTerm}`
+    this.router.navigateByUrl(`/search/${searchTerm}`);
   }
 }

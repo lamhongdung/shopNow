@@ -10,7 +10,9 @@ import { FooterComponent } from './component/footer/footer.component';
 import { HeaderComponent } from './component/header/header.component';
 import { Routes, RouterModule, Router} from '@angular/router';
 import { SearchComponent } from './component/search/search.component';
+import { ProductDetailComponent } from './component/product-detail/product-detail.component';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const routes: Routes = [
   // {path: 'order-history', component: OrderHistoryComponent, canActivate: [ OktaAuthGuard ]},
@@ -21,9 +23,8 @@ const routes: Routes = [
 
   // {path: 'checkout', component: CheckoutComponent},
   // {path: 'cart-details', component: CartDetailsComponent},
-  // {path: 'products/:id', component: ProductDetailsComponent},
-  {path: 'search/:keyword', component: ProductListComponent},
-
+  {path: 'product/:id', component: ProductDetailComponent},
+  {path: 'search/:searchTerm', component: ProductListComponent},
   {path: 'product', component: ProductListComponent},
   {path: '', redirectTo: '/product', pathMatch: 'full'},
 
@@ -37,13 +38,15 @@ const routes: Routes = [
     ProductListComponent,
     FooterComponent,
     HeaderComponent,
-    SearchComponent
+    SearchComponent,
+    ProductDetailComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    NgbModule
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]

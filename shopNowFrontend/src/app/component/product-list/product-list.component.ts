@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from 'src/app/common/product';
 import { ProductService } from 'src/app/service/product.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-product-list',
@@ -12,21 +13,24 @@ export class ProductListComponent implements OnInit {
 
   products: Product[] = [];
   searchMode: boolean = false;
-
   searchTerm: string | undefined;
 
   // new properties for pagination
   thePageNumber: number = 1;
-  thePageSize: number = 5;
+
+  // thePageSize = 8;
+  thePageSize: number = environment.pageSize;
+  thePageSizeInit: number = environment.pageSize;
+
   theTotalElements: number = 0;
 
+  previousSearchTerm: string | undefined;
 
   constructor(private productService: ProductService,
     private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    // the observables in this class only emit when the current and previous values differ based on shallow equality.
     // this.route.paramMap returns an "Observable<ParamMap>""
     this.route.paramMap.subscribe(
       () => {
@@ -36,8 +40,8 @@ export class ProductListComponent implements OnInit {
 
   listProducts() {
 
-    // check whether current url has "keyword" or not
-    this.searchMode = this.route.snapshot.paramMap.has('keyword');
+    // check whether current url has "searchTerm" or not
+    this.searchMode = this.route.snapshot.paramMap.has('searchTerm');
 
     if (this.searchMode) {
       this.handleSearchProducts();
@@ -51,43 +55,40 @@ export class ProductListComponent implements OnInit {
   handleSearchProducts() {
 
     // get value user inputs in the search box
-    // const theKeyword = this.route.snapshot.paramMap.get('keyword') || "";
-    this.searchTerm = this.route.snapshot.paramMap.get('keyword') || "";
+    this.searchTerm = this.route.snapshot.paramMap.get('searchTerm') || "";
 
-    // now search for the products using keyword
-    // this.productService.searchProducts(theKeyword).subscribe(
-    this.productService.searchProducts(this.searchTerm).subscribe(
-      data => {
-        this.products = data;
-      }
-    )
+    if (this.previousSearchTerm != this.searchTerm) {
+      this.thePageNumber = 1;
+    }
+
+    this.previousSearchTerm = this.searchTerm;
+
+    this.productService.searchProducts(this.searchTerm, this.thePageNumber - 1,
+      this.thePageSize).subscribe(
+        data => {
+          this.products = data._embedded.product;
+          this.thePageNumber = data.page.number + 1;
+          this.thePageSize = data.page.size;
+          this.theTotalElements = data.page.totalElements;
+        }
+      )
   }
 
   handleListProducts() {
 
-    // now get the products for the given category id
-    this.productService.getProducts().subscribe(
-      data => this.products = data
-    )
-
-    // this.productService.getProductListPaginate(this.thePageNumber - 1,
-    //   this.thePageSize,
-    //   this.currentCategoryId)
-    //   .subscribe(data => {
-    //     this.products = data._embedded.product;
-    //     this.thePageNumber = data.page.number + 1;
-    //     this.thePageSize = data.page.size;
-    //     this.theTotalElements = data.page.totalElements;
-    //   });
+    this.productService.getProductListPaginate(this.thePageNumber - 1,
+      this.thePageSize)
+      .subscribe(data => {
+        this.products = data._embedded.product;
+        this.thePageNumber = data.page.number + 1;
+        this.thePageSize = data.page.size;
+        this.theTotalElements = data.page.totalElements;
+      });
   }
 
-  // processResult() {
-  //   return data => {
-  //     this.products = data._embedded.product;
-  //     this.thePageNumber = data.page.number + 1;
-  //     this.thePageSize = data.page.size;
-  //     this.theTotalElements = data.page.totalElements;
-  //   };
-  // }
-
+  updatePageSize(target: any) {
+    this.thePageSize = target.value;
+    this.thePageNumber = 1;
+    this.listProducts();
+  }
 }
