@@ -14,7 +14,7 @@
                         <h5 class="card-title">{{ tempProduct.name }}</h5>
                     </a>
                     <p class="card-title" style="color:green">{{ tempProduct.unitPrice | currency:'VND' }}</p>
-                    <button class="btn btn-success btn-sm">Add to cart</button>
+                    <button (click)="addToCart(tempProduct)" class="btn btn-success btn-sm">Add to cart</button>
                 </div>
             </div>
         </div>
@@ -42,7 +42,8 @@
                 <div class="col-md-3 mt-2" style="text-align: right;">
                     <span class="mr-2">Page Size</span>
 
-                    <select (change)="updatePageSize($event.target)">
+                    <!-- <select (change)="updatePageSize($event.target)"> -->
+                    <select #mySelect (change)="updatePageSize(+mySelect.value)">
                         <option selected="true">{{thePageSizeInit}}</option>
                         <option>20</option>
                         <option>50</option>

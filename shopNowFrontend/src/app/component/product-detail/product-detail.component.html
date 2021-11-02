@@ -6,7 +6,7 @@
     <div>
         <p style="color:green">{{ product.unitPrice | currency:'VND' }}</p>
     </div>
-    <button class="btn btn-success btn-sm">Add to cart</button>
+    <button (click)=addToCart() class="btn btn-success btn-sm">Add to cart</button>
 
     <hr>
     <h4>Description</h4>

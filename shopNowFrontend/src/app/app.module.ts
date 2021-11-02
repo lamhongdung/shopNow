@@ -13,6 +13,8 @@ import { SearchComponent } from './component/search/search.component';
 import { ProductDetailComponent } from './component/product-detail/product-detail.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CartStatusComponent } from './component/cart-status/cart-status.component';
+import { CartDetailComponent } from './component/cart-detail/cart-detail.component';
 
 const routes: Routes = [
   // {path: 'order-history', component: OrderHistoryComponent, canActivate: [ OktaAuthGuard ]},
@@ -22,7 +24,7 @@ const routes: Routes = [
   // {path: 'login', component: LoginComponent},
 
   // {path: 'checkout', component: CheckoutComponent},
-  // {path: 'cart-details', component: CartDetailsComponent},
+  {path: 'cart-detail', component: CartDetailComponent},
   {path: 'product/:id', component: ProductDetailComponent},
   {path: 'search/:searchTerm', component: ProductListComponent},
   {path: 'product', component: ProductListComponent},
@@ -39,7 +41,9 @@ const routes: Routes = [
     FooterComponent,
     HeaderComponent,
     SearchComponent,
-    ProductDetailComponent
+    ProductDetailComponent,
+    CartStatusComponent,
+    CartDetailComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

@@ -1,0 +1,8 @@
+<li class="nav-item text-dark">
+    <a class="nav-link" routerLink="/cart-detail">
+        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+        <span class="badge bg-success">
+            ({{ totalPrice | currency: 'VND' }})({{ totalQuantity }})
+        </span>
+    </a>
+</li>

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CartItem } from 'src/app/common/cart-item';
 import { Product } from 'src/app/common/product';
+import { CartService } from 'src/app/service/cart.service';
 import { ProductService } from 'src/app/service/product.service';
 import { environment } from 'src/environments/environment';
 
@@ -25,8 +27,10 @@ export class ProductListComponent implements OnInit {
   theTotalElements: number = 0;
 
   previousSearchTerm: string | undefined;
+  // cartService: any;
 
   constructor(private productService: ProductService,
+    private cartService: CartService,
     private route: ActivatedRoute) {
   }
 
@@ -86,9 +90,20 @@ export class ProductListComponent implements OnInit {
       });
   }
 
-  updatePageSize(target: any) {
-    this.thePageSize = target.value;
+  // updatePageSize(target: any) {
+    updatePageSize(pageSize: number) {
+    // this.thePageSize = target.value;
+    this.thePageSize = pageSize;
     this.thePageNumber = 1;
     this.listProducts();
+  }
+
+  addToCart(theProduct: Product) {
+
+    console.log(`Adding to cart: ${theProduct.name}, ${theProduct.unitPrice}`);
+
+    const theCartItem = new CartItem(theProduct);
+
+    this.cartService.addToCart(theCartItem);
   }
 }
