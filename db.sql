@@ -8,23 +8,6 @@ create database shopnow;
 use shopnow;
 
 -- -----------------------------------------------------
--- Table `user`
--- -----------------------------------------------------
-
-drop table if exists `user`;
-
-CREATE TABLE `user`(
-	userName varchar(100) COLLATE utf8_unicode_ci not null,
-    email varchar(100) COLLATE utf8_unicode_ci not null,
-	password varchar(100) COLLATE utf8_unicode_ci not null,
-	PRIMARY KEY (userName)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-insert `user`(userName, email, password) values
-('admin','admin@gmail.com','admin'),
-('ez','ez@gmail.com','ez');
-
--- -----------------------------------------------------
 -- Table `productCategory`
 -- -----------------------------------------------------
 
@@ -37,7 +20,7 @@ CREATE TABLE `productCategory` (
 ENGINE=InnoDB
 AUTO_INCREMENT = 1;
 
-INSERT INTO productCategory(categoryName) VALUES ('BOOKS');
+INSERT INTO productCategory(categoryName) VALUES ('Phone');
 
 -- -----------------------------------------------------
 -- Table `product`
@@ -84,3 +67,55 @@ INSERT INTO product (name, description, unitPrice, imageUrl, active, unitInStock
 INSERT INTO product (name, description, unitPrice, imageUrl, active, unitInStock,  dateCreated, categoryId) VALUES ('Lenovo IdeaCentre AIO 3 24ITL6 i5','Lenovo IdeaCentre AIO 3 24ITL6 (F0G0009AVN) là phiên bản máy tính nguyên bộ All-in-one khi được tích hợp đầy đủ các linh kiện đa năng như loa, CPU, camera,... vào chung một màn hình lớn nhưng vẫn sở hữu lối thiết kế gọn gàng, thời thượng cùng cấu hình mạnh mẽ đa tác vụ',20590000,'assets/image/product/1019.jpg',1,100,now(),1);
 INSERT INTO product (name, description, unitPrice, imageUrl, active, unitInStock,  dateCreated, categoryId) VALUES ('Tai nghe EP Gaming Asus Rog Cetra II Core Đen','Củ tai có lớp vỏ nhôm nhẹ, cho khả năng chịu lực tốt, chống trầy xước. Kiểu dáng củ tai hơi nghiêng về phía trước cùng đệm tai và móc tai chất liệu LSR (cao su silicone lỏng) kết cấu cực mềm tạo nên sự dễ chịu và phù hợp tối ưu cho trải nghiệm nghe tốt nhất trong khi chơi game',1161000,'assets/image/product/1020.jpg',1,100,now(),1);
 INSERT INTO product (name, description, unitPrice, imageUrl, active, unitInStock,  dateCreated, categoryId) VALUES ('Tai nghe Bluetooth True Wireless Beats Studio Buds MJ503 Đỏ','Phiên bản Beats Studio Buds MJ503 màu đỏ cực bắt mắt với hộp sạc kiểu dáng mềm mại, mới lạ, rất trẻ trung cho người trẻ năng động. Vỏ ngoài hộp sạc và tai nghe dùng chất liệu nhựa nhám sang trọng, chống trầy, tiện lợi cho bạn mang theo đến mọi nơi nhờ kích thước gọn nhẹ',3790000,'assets/image/product/1021.jpg',1,100,now(),1);
+
+-- -----------------------------------
+-- Table `customer`
+-- -----------------------------------
+drop table if exists `customer`;
+
+CREATE TABLE `customer` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `fullname` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `shippingAddress` varchar(1000) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- -----------------------------------
+-- Table `orders`
+-- -----------------------------------
+drop table if exists `orders`;
+
+CREATE TABLE `orders` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `orderTrackingNumber` varchar(255) DEFAULT NULL,
+  `totalPrice` decimal(19,2) DEFAULT NULL,
+  `totalQuantity` int DEFAULT NULL,
+  `customerId` bigint DEFAULT NULL,
+  `status` varchar(128) DEFAULT NULL,
+  `dateCreated` datetime(6) DEFAULT NULL,
+  `lastUpdated` datetime(6) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_customerId` (`customerId`),
+  CONSTRAINT `FK_customerId` FOREIGN KEY (`customerId`) REFERENCES `customer` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- -----------------------------------
+-- Table `orderItem`
+-- -----------------------------------
+
+drop table if exists `orderItem`;
+
+CREATE TABLE `orderItem` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `imageUrl` varchar(255) DEFAULT NULL,
+  `quantity` int DEFAULT NULL,
+  `unitPrice` decimal(19,2) DEFAULT NULL,
+  `orderId` bigint DEFAULT NULL,
+  `productId` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_orderId` (`orderId`),
+  CONSTRAINT `FK_orderId` FOREIGN KEY (`orderId`) REFERENCES `orders` (`id`),
+  CONSTRAINT `FK_productId` FOREIGN KEY (`productId`) REFERENCES `product` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

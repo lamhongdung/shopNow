@@ -1,0 +1,133 @@
+<div class="container-fluid" style="margin-top:70px">
+
+    <form [formGroup]="checkoutFormGroup" (ngSubmit)="onSubmit()">
+
+        <!-- customer form group -->
+        <div formGroupName="customer">
+            <div class="row">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-8">
+                    <h3>Customer</h3>
+                </div>
+                <div class="col-md-2">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-2">
+                    <label>Fullname(*)</label>
+                </div>
+                <div class="col-md-6">
+                    <input formControlName="fullname" type="text">
+
+                    <small *ngIf="fullname.invalid && (fullname.dirty || fullname.touched)" class="text-danger">
+                        <p *ngIf="fullname.errors.required || fullname.errors.notOnlyWhitespace">
+                            Fullname is required
+                        </p>
+                        <p *ngIf="fullname.errors.minlength">
+                            Fullname must be at least 2 characters long
+                        </p>
+                    </small>
+                </div>
+                <div class="col-md-2">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-2">
+                    <label>Email(*)</label>
+                </div>
+                <div class="col-md-6">
+                    <input formControlName="email" type="text">
+
+                    <small *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+                        <p *ngIf="email.errors.required">
+                            Email is required
+                        </p>
+                        <p *ngIf="email.errors.pattern">
+                            Email must be a valid email address format
+                        </p>
+                    </small>
+
+                </div>
+                <div class="col-md-2">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-2">
+                    <label>Phone(*)</label>
+                </div>
+                <div class="col-md-6">
+                    <input formControlName="phone" type="text">
+
+                    <small *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="text-danger">
+                        <p *ngIf="phone.errors.required">
+                            Phone is required
+                        </p>
+                        <p *ngIf="phone.errors.pattern">
+                            Phone must has from 10 to 11 digits
+                        </p>
+                    </small>
+
+                </div>
+                <div class="col-md-2">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-2">
+                    <label>Shipping Address(*)</label>
+                </div>
+                <div class="col-md-6">
+                    <input formControlName="shippingAddress" type="text">
+
+                    <small *ngIf="shippingAddress.invalid && (shippingAddress.dirty || shippingAddress.touched)"
+                        class="text-danger">
+
+                        <p *ngIf="shippingAddress.errors.required || shippingAddress.errors.notOnlyWhitespace">
+                            Shipping address is required
+                        </p>
+                        <p *ngIf="shippingAddress.errors.minlength">
+                            Shipping address must be at least 2 characters long
+                        </p>
+                    </small>
+                </div>
+                <div class="col-md-2">
+                </div>
+            </div>
+        </div>
+
+        <!-- Order details -->
+        <div class="row">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-8">
+                <h3>Review Your Order</h3>
+                <p>Total Quantity: {{ totalQuantity }}</p>
+                <p>Total Price: {{ totalPrice | currency: 'VND' }}</p>
+            </div>
+            <div class="col-md-2">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-success">Purchase</button>
+            </div>
+            <div class="col-md-2">
+            </div>
+        </div>
+    </form>
+
+</div>

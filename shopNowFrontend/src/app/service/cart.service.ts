@@ -10,7 +10,9 @@ export class CartService {
 
   cartItems: CartItem[] = [];
 
+  // initial value of totalPrice = 0
   totalPrice: Subject<number> = new BehaviorSubject<number>(0);
+  // initial value of totalQuantity = 0
   totalQuantity: Subject<number> = new BehaviorSubject<number>(0);
 
   storage: Storage = sessionStorage;
