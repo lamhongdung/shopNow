@@ -7,6 +7,7 @@ import lombok.Data;
 
 import java.util.Set;
 
+// @Data = @Getter + @Setter + @ToString + EqualsAndHashCode + @RequiredArgsConstructor
 @Data
 public class Purchase {
 

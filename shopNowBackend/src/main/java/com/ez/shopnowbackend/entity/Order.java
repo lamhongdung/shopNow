@@ -12,33 +12,36 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name="orders")
+// note that must have char "s" at the end "orders".
+// because "order" is key word in mySQL
+@Table(name = "orders")
 @Getter
 @Setter
 public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name="orderTrackingNumber")
+    // order number
+    @Column(name = "orderTrackingNumber")
     private String orderTrackingNumber;
 
-    @Column(name="totalQuantity")
+    @Column(name = "totalQuantity")
     private int totalQuantity;
 
-    @Column(name="totalPrice")
+    @Column(name = "totalPrice")
     private BigDecimal totalPrice;
 
-    @Column(name="status")
+    @Column(name = "status")
     private String status;
 
-    @Column(name="dateCreated")
+    @Column(name = "dateCreated")
     @CreationTimestamp
     private Date dateCreated;
 
-    @Column(name="lastUpdated")
+    @Column(name = "lastUpdated")
     @UpdateTimestamp
     private Date lastUpdated;
 

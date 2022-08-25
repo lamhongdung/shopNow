@@ -9,8 +9,10 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
+// 'product' is a table name in SQL
 @Table(name="product")
-// generate getter/setter
+// @Data = @Getter + @Setter + @ToString + EqualsAndHashCode + @RequiredArgsConstructor
+// @Data: help to auto generate getter and setter
 @Data
 public class Product {
 
@@ -38,15 +40,17 @@ public class Product {
     private int unitInStock;
 
     // foreign key "categoryId"
-    @ManyToOne
+    @ManyToOne // many products under 1 productCategory
     @JoinColumn(name = "categoryId", nullable = false)
     private ProductCategory category;
 
     @Column(name = "dateCreated")
+    // hibernate will auto manage the timestamps
     @CreationTimestamp
     private Date dateCreated;
 
     @Column(name = "lastUpdated")
+    // hibernate will auto manage the timestamps
     @UpdateTimestamp
     private Date lastUpdated;
 }

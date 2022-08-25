@@ -1,6 +1,6 @@
 import { Product } from "./product";
 
-// CartItem = each product line of cart(order)
+// CartItem(cart detail) = each product line of cart
 export class CartItem {
 
     id: string | undefined;

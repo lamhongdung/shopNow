@@ -4,7 +4,11 @@
 
 export const environment = {
   production: false,
+
+  // base api url
   apiUrl: "http://localhost:8080/api",
+
+  // number of products per page
   pageSize: 8
 };
 

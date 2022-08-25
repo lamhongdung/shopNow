@@ -3,23 +3,22 @@
         <a class="navbar-brand" routerLink="/product">
             Shopnow
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button (click)="toggleCollapsed()" class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent"
+            [ngClass]="{'collapse': collapsed, 'navbar-collapse': true}">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-start">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" routerLink="/product">Product</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/order">Order</a>
+                    <a class="nav-link" routerLink="/order-history">Order History</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/user">User</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/contact">Contact</a>
+                    <a class="nav-link" routerLink="/signup">Sign Up</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/login">Login</a>
@@ -27,15 +26,15 @@
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/logout">Logout</a>
                 </li>
-
-                <!-- cart status -->
-                <app-cart-status></app-cart-status>
-
             </ul>
-
-            <!-- search component -->
-            <app-search></app-search>
-
+            <ul class="navbar-nav justify-content-between">
+                <!-- cart -->
+                <app-cart-status></app-cart-status>
+            </ul>
+            <ul class="navbar-nav justify-content-end">
+                <!-- search component -->
+                <app-search></app-search>
+            </ul>
         </div>
     </div>
 </nav>

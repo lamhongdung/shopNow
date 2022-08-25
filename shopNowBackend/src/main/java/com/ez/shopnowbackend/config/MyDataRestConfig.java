@@ -34,7 +34,6 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         // disable HTTP methods for Product: PUT, POST, DELETE and PATCH
         disableHttpMethods(Product.class, config, theUnsupportedActions);
         disableHttpMethods(ProductCategory.class, config, theUnsupportedActions);
-//        disableHttpMethods(Order.class, config, theUnsupportedActions);
 
         // call an internal helper method
         exposeIds(config);
@@ -47,6 +46,7 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
                 .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions));
     }
 
+    //  show ids in json of end points
     private void exposeIds(RepositoryRestConfiguration config) {
 
         // expose entity ids
